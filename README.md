@@ -155,7 +155,7 @@ The diagram below represents the evolution path of CMOS technology and possible 
 ---
 
 # 1.3 Introduction to FinFETs
-
+https://github.com/kavyashri418/FinFETs_7nm_VSD/blob/main/WhatsApp%20Image%202025-09-23%20at%202.43.14%20PM%20(1).jpeg?raw=true
 This repository provides a clear and concise introduction to **FinFET (Fin Field-Effect Transistor)** technology — the workhorse of modern semiconductor scaling — including its structure, advantages, and challenges.
 
 ---
