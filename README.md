@@ -9,14 +9,14 @@ Table of Contents
  |[**Mod. 2**](#2---lab-to-simulation-7nm-finfet-inverter-performance-analysis) | **Lab-to-Simulation: 7nm FinFET Inverter Performance Analysis** <br> <ol> <li>[NFET DC Characteristics Using 7nm PDKs](#21---nfet-dc-characteristics-using-7nm-pdks)</li> <li>[First Inverter Characteristics Using 7nm FinFETs](#22---first-inverter-characteristics-using-7nm-finfets)</li><li>[Module 2 Assignment - 7nm Inverter Characterization](#23---module-2-assignment---7nm-inverter-characterization)</li> </ol> |
  |[**Mod. 3**](#3---design-of-a-bandgap-reference-circuit) | **Design of a BandGap Reference Circuit** <br> <ol> <li>[Theory: Design of a BGR Circuit](#31---theory-design-of-a-bgr-circuit)</li> <li>[Module 3 Assignent - Bandgap Reference Design and Simulation using Xschem](#32---module-3-assignent---bandgap-reference-design-and-simulation-using-xschem)</li> </ol> |
  
-# 1 - Scaling Beyond CMOS: FinFET Devices and Innovations
+# 1.1 - Scaling Beyond CMOS: FinFET Devices and Innovations
 
 ## Overview
 This document explores the path to **Zetta-scale computing**, focusing on innovations in FinFET devices, FEOL (Front-End-Of-Line), and BEOL (Back-End-Of-Line) technologies.
 
 ---
 
-## 1.1 Path to Zetta-Scale Computing
+## Path to Zetta-Scale Computing
 - **FinFETs**
 - **FEOL Innovations**
 - **BEOL Innovations**
@@ -76,7 +76,7 @@ Achieving ZettaFLOP-scale computing will require:
 - New materials (e.g., room-temperature superconductors)
 - Support for next-gen scientific workloads and global modeling challenges
   
-# CMOS Evolution and Next-Gen Candidates
+# 1.2 CMOS Evolution and Next-Gen Candidates
 
 This repository explores **CMOS evolution** and the **next-generation device candidates** required to scale semiconductor technology into the future.
 
@@ -154,7 +154,7 @@ The diagram below represents the evolution path of CMOS technology and possible 
 
 ---
 
-# 3. Introduction to FinFETs
+# 1.3 Introduction to FinFETs
 
 This repository provides a clear and concise introduction to **FinFET (Fin Field-Effect Transistor)** technology — the workhorse of modern semiconductor scaling — including its structure, advantages, and challenges.
 
@@ -277,7 +277,7 @@ FinFETs offer **better electrostatic control**, lower leakage, and improved scal
 
 ---
 
-# 3.1 CMOS Technology Inflection Points
+# 1.3 CMOS Technology Inflection Points
 
 This repository documents **key inflection points in CMOS technology** — the major innovations that have enabled continued scaling of transistors over decades.  
 
@@ -342,7 +342,7 @@ However, to keep up with **Moore's Law**, the industry has had to introduce **ne
 
 ---
 
-# 4 - Standard Cell Area Scaling & Fin Depopulation
+# 1.4 - Standard Cell Area Scaling & Fin Depopulation
 
 This repository explains **Standard Cell Area Scaling** techniques, with a focus on **Fin Depopulation** — a critical strategy used in advanced process nodes to reduce area while balancing performance, power, and yield.
 
@@ -410,7 +410,7 @@ This technique is crucial in **area-optimized libraries**.
 
 ---
 
-# 5 - Parasitic Resistance in Advanced CMOS Nodes
+# 1.5 - Parasitic Resistance in Advanced CMOS Nodes
 
 This repository documents **parasitic resistance**, its sources, impact on circuit performance, and methods for reduction.  
 As technology nodes scale to **7nm, 5nm, and beyond**, parasitic resistance has become a major limiter of transistor and interconnect performance.
@@ -464,7 +464,7 @@ Parasitic resistance can be broken down into:
 - **Air-Gaps & Low-k Dielectrics** – Reduce parasitic capacitance and RC delay
 - **Backside Power Delivery** – Dedicated low-resistance power routing
 
-# 6 - Device Scaling Using Layered Materials
+# 1.6 - Device Scaling Using Layered Materials
 
 This repository explores **device scaling using layered (2D) materials** — such as MoS₂, WS₂, WSe₂, and graphene — as a path to extend Moore’s Law beyond the limits of traditional silicon FinFETs.
 
@@ -533,7 +533,7 @@ The key electrical characteristics analyzed in this project include:
 - **Capacitance (C):** Gate capacitance influencing switching speed and power.
 - **Parasitic Effects:** Includes series resistance, leakage currents, and capacitance contributions.
 
-# 7 - 3D Structures in Device Scaling Using Layered Materials
+# 1.7 - 3D Structures in Device Scaling Using Layered Materials
 
 ## Overview
 This repository explores **3D device structures** using layered materials for next-generation electronics. 3D structures improve **device density, performance, and scaling potential**, overcoming limitations of traditional planar devices.
