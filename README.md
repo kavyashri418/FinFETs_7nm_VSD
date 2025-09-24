@@ -1,5 +1,5 @@
 ## FinFET Circuit Design and Characterization
-This GitHub repository documents the 10-day workshop on FinFET Circuit Design and Characterization using ASAP7 PDK offered by VSD Corp. Pvt. Ltd. attended from 27 Aug - 05 Sept, 2025.
+This GitHub repository documents the 10-day workshop on FinFET Circuit Design and Characterization using ASAP7 PDK offered by VSD Corp. Pvt. Ltd. attended from 10 Sep - 19 Sept, 2025.
 
 ## Table of Contents
 
@@ -210,9 +210,309 @@ Back-side Power Delivery Network (Bs-PDN)
 
 ## 2.1 7nm FinFET Nmos Performance Analysis
 
-Spice Deck:nfet_char.spice
+<details> <summary> <b>SPICE Deck:</b> nfet_char.spice </summary>
 
-```spice
+```
+** sch_path: /home/vsduser/Desktop/nfetchar.sch
+**.subckt nfetchar
+Xnfet1 nfet_out nfet_in GND GND asap_7nm_nfet l=7e-009 nfin=14
+R1 vdd nfet_out 1k m=1
+V1 nfet_in GND 3
+V2 VDD GND 3
+**** begin user architecture code
+
+ .dc v1 0 0.7 1m v2 0 0.7 0.2
+.control
+run
+set xbrushwidth=3
+let vd = vdd - nfet_out
+let id  = vd/1000
+plot id
+.endc
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.GLOBAL VDD
+.GLOBAL nfet_in
+**** begin user architecture code
+
+.subckt asap_7nm_nfet S G D B l=7e-009 nfin=14
+	nnmos_finfet S G D B BSIMCMG_osdi_N l=7e-009 nfin=14
+.ends asap_7nm_nfet
+
+.model BSIMCMG_osdi_N BSIMCMG_va (
++ TYPE = 1
+************************************************************
+*                         general                          *
+************************************************************
++version = 107             bulkmod = 1               igcmod  = 1               igbmod  = 0
++gidlmod = 1               iimod   = 0               geomod  = 1               rdsmod  = 0
++rgatemod= 0               rgeomod = 0               shmod   = 0               nqsmod  = 0
++coremod = 0               cgeomod = 0               capmod  = 0               tnom    = 25
++eot     = 1e-009          eotbox  = 1.4e-007        eotacc  = 1e-010          tfin    = 6.5e-009
++toxp    = 2.1e-009        nbody   = 1e+022          phig    = 4.2466          epsrox  = 3.9
++epsrsub = 11.9            easub   = 4.05            ni0sub  = 1.1e+016        bg0sub  = 1.17
++nc0sub  = 2.86e+025       nsd     = 2e+026          ngate   = 0               nseg    = 5
++l       = 2.1e-008        xl      = 1e-009          lint    = -2e-009         dlc     = 0
++dlbin   = 0               hfin    = 3.2e-008        deltaw  = 0               deltawcv= 0
++sdterm  = 0               epsrsp  = 3.9             nfin    = 1
++toxg    = 1.80e-009
+************************************************************
+*                            dc                            *
+************************************************************
++cit     = 0               cdsc    = 0.01            cdscd   = 0.01            dvt0    = 0.05
++dvt1    = 0.47            phin    = 0.05            eta0    = 0.07            dsub    = 0.35
++k1rsce  = 0               lpe0    = 0               dvtshift= 0               qmfactor= 2.5
++etaqm   = 0.54            qm0     = 0.001           pqm     = 0.66            u0      = 0.0303
++etamob  = 2               up      = 0               ua      = 0.55            eu      = 1.2
++ud      = 0               ucs     = 1               rdswmin = 0               rdsw    = 200
++wr      = 1               rswmin  = 0               rdwmin  = 0               rshs    = 0
++rshd    = 0               vsat    = 70000           deltavsat= 0.2             ksativ  = 2
++mexp    = 4               ptwg    = 30              pclm    = 0.05            pclmg   = 0
++pdibl1  = 0               pdibl2  = 0.002           drout   = 1               pvag    = 0
++fpitch  = 2.7e-008        rth0    = 0.225           cth0    = 1.243e-006      wth0    = 2.6e-007
++lcdscd  = 5e-005          lcdscdr = 5e-005          lrdsw   = 0.2             lvsat   = 0
+************************************************************
+*                         leakage                          *
+************************************************************
++aigc    = 0.014           bigc    = 0.005           cigc    = 0.25            dlcigs  = 1e-009
++dlcigd  = 1e-009          aigs    = 0.0115          aigd    = 0.0115          bigs    = 0.00332
++bigd    = 0.00332         cigs    = 0.35            cigd    = 0.35            poxedge = 1.1
++agidl   = 1e-012          agisl   = 1e-012          bgidl   = 10000000        bgisl   = 10000000
++egidl   = 0.35            egisl   = 0.35
+************************************************************
+*                            rf                            *
+************************************************************
+************************************************************
+*                         junction                         *
+************************************************************
+************************************************************
+*                       capacitance                        *
+************************************************************
++cfs     = 0               cfd     = 0               cgso    = 1.6e-010        cgdo    = 1.6e-010
++cgsl    = 0               cgdl    = 0               ckappas = 0.6             ckappad = 0.6
++cgbo    = 0               cgbl    = 0
+************************************************************
+*                       temperature                        *
+************************************************************
++tbgasub = 0.000473        tbgbsub = 636             kt1     = 0               kt1l    = 0
++ute     = -0.7            utl     = 0               ua1     = 0.001032        ud1     = 0
++ucste   = -0.004775       at      = 0.001           ptwgt   = 0.004           tmexp   = 0
++prt     = 0               tgidl   = -0.007          igt     = 2.5
+************************************************************
+*                          noise                           *
+************************************************************
+**)
+.control
+pre_osdi /home/vsduser/Downloads/bsimcmg.osdi
+.endc
+
+
+**** end user architecture code
+.end 
+```
+</details>
+
+Schematic of nfet in Xschem
+
+![WhatsApp Image 2025-09-24 at 11 55 30 PM (1)](https://github.com/user-attachments/assets/c8846bb8-7255-4e70-95a1-8e0a1edac317)
+
+
+<details> <summary> <b>SPICE Deck:</b> nfet_char2.spice </summary>
+
+```
+** sch_path: /home/vsduser/Desktop/asap_7nm_Xschem/inverter_7nmfinfet.sch
+**.subckt inverter_7nmfinfet
+Xnfet1 nfet_out nfet_in GND GND asap_7nm_nfet l=7e-009 nfin=14
+Xpfet1 nfet_out nfet_in vdd vdd asap_7nm_pfet l=7e-009 nfin=14
+V1 nfet_in GND pulse(0 0.7 20p 10p 10p 20p 500p 1)
+V2 vdd GND 0.7
+**** begin user architecture code
+
+
+.tran 0.1p 100p
+.control
+    run
+    set xbrushwidth=3
+    plot nfet_out nfet_in
+.endc
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+**** begin user architecture code
+
+.subckt asap_7nm_pfet S G D B l=7e-009 nfin=14
+	npmos_finfet S G D B BSIMCMG_osdi_P l=7e-009 nfin=14
+.ends asap_7nm_pfet
+
+.model BSIMCMG_osdi_P BSIMCMG_va (
++ TYPE = 0
+
+************************************************************
+*                         general                          *
+************************************************************
++version = 107             bulkmod = 1               igcmod  = 1               igbmod  = 0
++gidlmod = 1               iimod   = 0               geomod  = 1               rdsmod  = 0
++rgatemod= 0               rgeomod = 0               shmod   = 0               nqsmod  = 0
++coremod = 0               cgeomod = 0               capmod  = 0               tnom    = 25
++eot     = 1e-009          eotbox  = 1.4e-007        eotacc  = 3e-010          tfin    = 6.5e-009
++toxp    = 2.1e-009        nbody   = 1e+022          phig    = 4.9278          epsrox  = 3.9
++epsrsub = 11.9            easub   = 4.05            ni0sub  = 1.1e+016        bg0sub  = 1.17
++nc0sub  = 2.86e+025       nsd     = 2e+026          ngate   = 0               nseg    = 5
++l       = 2.1e-008        xl      = 1e-009          lint    = -2.5e-009       dlc     = 0
++dlbin   = 0               hfin    = 3.2e-008        deltaw  = 0               deltawcv= 0
++sdterm  = 0               epsrsp  = 3.9             nfin    = 1
++toxg    = 1.8e-009
+************************************************************
+*                            dc                            *
+************************************************************
++cit     = 0               cdsc    = 0.003469        cdscd   = 0.001486        dvt0    = 0.05
++dvt1    = 0.36            phin    = 0.05            eta0    = 0.094           dsub    = 0.24
++k1rsce  = 0               lpe0    = 0               dvtshift= 0               qmfactor= 0
++etaqm   = 0.54            qm0     = 2.183e-012      pqm     = 0.66            u0      = 0.0237
++etamob  = 4               up      = 0               ua      = 1.133           eu      = 0.05
++ud      = 0.0105          ucs     = 0.2672          rdswmin = 0               rdsw    = 200
++wr      = 1               rswmin  = 0               rdwmin  = 0               rshs    = 0
++rshd    = 0               vsat    = 60000           deltavsat= 0.17            ksativ  = 1.592
++mexp    = 2.491           ptwg    = 25              pclm    = 0.01            pclmg   = 1
++pdibl1  = 800             pdibl2  = 0.005704        drout   = 4.97            pvag    = 200
++fpitch  = 2.7e-008        rth0    = 0.15            cth0    = 1.243e-006      wth0    = 2.6e-007
++lcdscd  = 0               lcdscdr = 0               lrdsw   = 1.3             lvsat   = 1441
+************************************************************
+*                         leakage                          *
+************************************************************
++aigc    = 0.007           bigc    = 0.0015          cigc    = 1               dlcigs  = 5e-009
++dlcigd  = 5e-009          aigs    = 0.006           aigd    = 0.006           bigs    = 0.001944
++bigd    = 0.001944        cigs    = 1               cigd    = 1               poxedge = 1.152
++agidl   = 2e-012          agisl   = 2e-012          bgidl   = 1.5e+008        bgisl   = 1.5e+008
++egidl   = 1.142           egisl   = 1.142
+************************************************************
+*                            rf                            *
+************************************************************
+************************************************************
+*                         junction                         *
+************************************************************
+************************************************************
+*                       capacitance                        *
+************************************************************
++cfs     = 0               cfd     = 0               cgso    = 1.6e-010        cgdo    = 1.6e-010
++cgsl    = 0               cgdl    = 0               ckappas = 0.6             ckappad = 0.6
++cgbo    = 0               cgbl    = 0
+************************************************************
+*                       temperature                        *
+************************************************************
++tbgasub = 0.000473        tbgbsub = 636             kt1     = 0               kt1l    = 0
++ute     = -1.2            utl     = 0               ua1     = 0.001032        ud1     = 0
++ucste   = -0.004775       at      = 0.001           ptwgt   = 0.004           tmexp   = 0
++prt     = 0               tgidl   = -0.007          igt     = 2.5
+************************************************************
+*                          noise                           *
+************************************************************
+**)
+.control
+pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
+.endc
+
+
+
+.subckt asap_7nm_nfet S G D B l=7e-009 nfin=14
+	nnmos_finfet S G D B BSIMCMG_osdi_N l=7e-009 nfin=14
+.ends asap_7nm_nfet
+
+.model BSIMCMG_osdi_N BSIMCMG_va (
++ TYPE = 1
+************************************************************
+*                         general                          *
+************************************************************
++version = 107             bulkmod = 1               igcmod  = 1               igbmod  = 0
++gidlmod = 1               iimod   = 0               geomod  = 1               rdsmod  = 0
++rgatemod= 0               rgeomod = 0               shmod   = 0               nqsmod  = 0
++coremod = 0               cgeomod = 0               capmod  = 0               tnom    = 25
++eot     = 1e-009          eotbox  = 1.4e-007        eotacc  = 1e-010          tfin    = 6.5e-009
++toxp    = 2.1e-009        nbody   = 1e+022          phig    = 4.2466          epsrox  = 3.9
++epsrsub = 11.9            easub   = 4.05            ni0sub  = 1.1e+016        bg0sub  = 1.17
++nc0sub  = 2.86e+025       nsd     = 2e+026          ngate   = 0               nseg    = 5
++l       = 2.1e-008        xl      = 1e-009          lint    = -2e-009         dlc     = 0
++dlbin   = 0               hfin    = 3.2e-008        deltaw  = 0               deltawcv= 0
++sdterm  = 0               epsrsp  = 3.9             nfin    = 1
++toxg    = 1.80e-009
+************************************************************
+*                            dc                            *
+************************************************************
++cit     = 0               cdsc    = 0.01            cdscd   = 0.01            dvt0    = 0.05
++dvt1    = 0.47            phin    = 0.05            eta0    = 0.07            dsub    = 0.35
++k1rsce  = 0               lpe0    = 0               dvtshift= 0               qmfactor= 2.5
++etaqm   = 0.54            qm0     = 0.001           pqm     = 0.66            u0      = 0.0303
++etamob  = 2               up      = 0               ua      = 0.55            eu      = 1.2
++ud      = 0               ucs     = 1               rdswmin = 0               rdsw    = 200
++wr      = 1               rswmin  = 0               rdwmin  = 0               rshs    = 0
++rshd    = 0               vsat    = 70000           deltavsat= 0.2             ksativ  = 2
++mexp    = 4               ptwg    = 30              pclm    = 0.05            pclmg   = 0
++pdibl1  = 0               pdibl2  = 0.002           drout   = 1               pvag    = 0
++fpitch  = 2.7e-008        rth0    = 0.225           cth0    = 1.243e-006      wth0    = 2.6e-007
++lcdscd  = 5e-005          lcdscdr = 5e-005          lrdsw   = 0.2             lvsat   = 0
+************************************************************
+*                         leakage                          *
+************************************************************
++aigc    = 0.014           bigc    = 0.005           cigc    = 0.25            dlcigs  = 1e-009
++dlcigd  = 1e-009          aigs    = 0.0115          aigd    = 0.0115          bigs    = 0.00332
++bigd    = 0.00332         cigs    = 0.35            cigd    = 0.35            poxedge = 1.1
++agidl   = 1e-012          agisl   = 1e-012          bgidl   = 10000000        bgisl   = 10000000
++egidl   = 0.35            egisl   = 0.35
+************************************************************
+*                            rf                            *
+************************************************************
+************************************************************
+*                         junction                         *
+************************************************************
+************************************************************
+*                       capacitance                        *
+************************************************************
++cfs     = 0               cfd     = 0               cgso    = 1.6e-010        cgdo    = 1.6e-010
++cgsl    = 0               cgdl    = 0               ckappas = 0.6             ckappad = 0.6
++cgbo    = 0               cgbl    = 0
+************************************************************
+*                       temperature                        *
+************************************************************
++tbgasub = 0.000473        tbgbsub = 636             kt1     = 0               kt1l    = 0
++ute     = -0.7            utl     = 0               ua1     = 0.001032        ud1     = 0
++ucste   = -0.004775       at      = 0.001           ptwgt   = 0.004           tmexp   = 0
++prt     = 0               tgidl   = -0.007          igt     = 2.5
+************************************************************
+*                          noise                           *
+************************************************************
+**)
+.control
+pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
+.endc
+
+
+**** end user architecture code
+.end
+```
+</details>
+
+```bash
+plot Id
+```
+
+![WhatsApp Image 2025-09-24 at 10 59 19 PM (1)](https://github.com/user-attachments/assets/78ed4562-8a4d-4875-966b-74508342dcee)
+
+```bash
+plot id vs vd
+```
+
+![WhatsApp Image 2025-09-24 at 10 59 19 PM](https://github.com/user-attachments/assets/c4481690-c0e2-43e1-a197-9ecc2f50a774)
+
+## 2.2 CMOS Inverter_vtc Characteristics
+
+<details> <summary> <b>SPICE Deck:</b> inverter_vtc.spice </summary>
+
+```
+
 ** sch_path: /home/vsduser/Desktop/asap_7nm_Xschem/inverter_vtcchar.sch
 **.subckt inverter_vtcchar
 Xnfet1 nfet_out nfet_in GND GND asap_7nm_nfet l=7e-009 nfin=14
@@ -384,29 +684,9 @@ pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
 
 **** end user architecture code
 .end
+
 ```
-
-
-Schematic of nfet in Xschem
-
-![WhatsApp Image 2025-09-24 at 11 55 30 PM (1)](https://github.com/user-attachments/assets/c8846bb8-7255-4e70-95a1-8e0a1edac317)
-
-nfet spice code
-```bash
-plot Id
-```
-
-![WhatsApp Image 2025-09-24 at 10 59 19 PM (1)](https://github.com/user-attachments/assets/78ed4562-8a4d-4875-966b-74508342dcee)
-
-```bash
-plot id vs vd
-```
-
-![WhatsApp Image 2025-09-24 at 10 59 19 PM](https://github.com/user-attachments/assets/c4481690-c0e2-43e1-a197-9ecc2f50a774)
-
-## 2.2 CMOS Inverter_vtc Characteristics
-
-Spice Deck: inverter_vtc.spice
+</details>
 
 Inverter schematic in Xschem
 
@@ -528,7 +808,196 @@ The below photo is taken as the reference circuit for designing the Bandgap refe
 
 ![WhatsApp Image 2025-09-25 at 12 20 16 AM](https://github.com/user-attachments/assets/fa7564b7-7c51-40b5-82fe-cd0996e89608)
 
-Code for dc analysis used to plot Vref and Vctat
+<details> <summary> <b>SPICE Deck bgr_dc_spice:</b> </summary>
+	
+```	
+** sch_path: /home/vsduser/Desktop/asap_7nm_Xschem/bandgapcktfinal.sch
+**.subckt bandgapcktfinal
+Xpfet1 net3 net1 VDD net12 asap_7nm_pfet l=7e-009 nfin=14
+Xpfet2 net2 net1 VDD net13 asap_7nm_pfet l=7e-009 nfin=14
+Xpfet3 Vref net2 VDD net14 asap_7nm_pfet l=7e-009 nfin=14
+Xpfet4 net4 net5 VDD net15 asap_7nm_pfet l=7e-009 nfin=14
+Xpfet5 net9 net1 net4 net16 asap_7nm_pfet l=7e-009 nfin=14
+Xpfet6 net6 net1 net5 net17 asap_7nm_pfet l=7e-009 nfin=14
+Xnfet1 net10 net6 net3 net18 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet2 net7 net6 net2 net19 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet3 net8 net8 GND net20 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet4 net9 net9 net8 net21 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet5 net10 net10 GND net22 asap_7nm_nfet l=7e-009 nfin=14
+R1 net7 net11 1k m=1
+Xnfet6 net11 net11 GND net23 asap_7nm_nfet l=7e-009 nfin=14
+R2 Vref VCTAT 1k m=1
+Xnfet7 VCTAT VCTAT GND net24 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet8 net11 net11 GND net25 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet9 net11 net11 GND net26 asap_7nm_nfet l=7e-009 nfin=14
+Xnfet10 net11 net11 GND net27 asap_7nm_nfet l=7e-009 nfin=14
+V2 VDD GND 0.7
+**** begin user architecture code
+
+
+.dc temp -45 125 5
+.control
+run
+plot v(Vref)
+plot v(Vctat)
+.endc
+
+
+**** end user architecture code
+**.ends
+.GLOBAL VDD
+.GLOBAL GND
+**** begin user architecture code
+
+.subckt asap_7nm_pfet S G D B l=7e-009 nfin=14
+	npmos_finfet S G D B BSIMCMG_osdi_P l=7e-009 nfin=14
+.ends asap_7nm_pfet
+
+.model BSIMCMG_osdi_P BSIMCMG_va (
++ TYPE = 0
+
+************************************************************
+*                         general                          *
+************************************************************
++version = 107             bulkmod = 1               igcmod  = 1               igbmod  = 0
++gidlmod = 1               iimod   = 0               geomod  = 1               rdsmod  = 0
++rgatemod= 0               rgeomod = 0               shmod   = 0               nqsmod  = 0
++coremod = 0               cgeomod = 0               capmod  = 0               tnom    = 25
++eot     = 1e-009          eotbox  = 1.4e-007        eotacc  = 3e-010          tfin    = 6.5e-009
++toxp    = 2.1e-009        nbody   = 1e+022          phig    = 4.9278          epsrox  = 3.9
++epsrsub = 11.9            easub   = 4.05            ni0sub  = 1.1e+016        bg0sub  = 1.17
++nc0sub  = 2.86e+025       nsd     = 2e+026          ngate   = 0               nseg    = 5
++l       = 2.1e-008        xl      = 1e-009          lint    = -2.5e-009       dlc     = 0
++dlbin   = 0               hfin    = 3.2e-008        deltaw  = 0               deltawcv= 0
++sdterm  = 0               epsrsp  = 3.9             nfin    = 1
++toxg    = 1.8e-009
+************************************************************
+*                            dc                            *
+************************************************************
++cit     = 0               cdsc    = 0.003469        cdscd   = 0.001486        dvt0    = 0.05
++dvt1    = 0.36            phin    = 0.05            eta0    = 0.094           dsub    = 0.24
++k1rsce  = 0               lpe0    = 0               dvtshift= 0               qmfactor= 0
++etaqm   = 0.54            qm0     = 2.183e-012      pqm     = 0.66            u0      = 0.0237
++etamob  = 4               up      = 0               ua      = 1.133           eu      = 0.05
++ud      = 0.0105          ucs     = 0.2672          rdswmin = 0               rdsw    = 200
++wr      = 1               rswmin  = 0               rdwmin  = 0               rshs    = 0
++rshd    = 0               vsat    = 60000           deltavsat= 0.17            ksativ  = 1.592
++mexp    = 2.491           ptwg    = 25              pclm    = 0.01            pclmg   = 1
++pdibl1  = 800             pdibl2  = 0.005704        drout   = 4.97            pvag    = 200
++fpitch  = 2.7e-008        rth0    = 0.15            cth0    = 1.243e-006      wth0    = 2.6e-007
++lcdscd  = 0               lcdscdr = 0               lrdsw   = 1.3             lvsat   = 1441
+************************************************************
+*                         leakage                          *
+************************************************************
++aigc    = 0.007           bigc    = 0.0015          cigc    = 1               dlcigs  = 5e-009
++dlcigd  = 5e-009          aigs    = 0.006           aigd    = 0.006           bigs    = 0.001944
++bigd    = 0.001944        cigs    = 1               cigd    = 1               poxedge = 1.152
++agidl   = 2e-012          agisl   = 2e-012          bgidl   = 1.5e+008        bgisl   = 1.5e+008
++egidl   = 1.142           egisl   = 1.142
+************************************************************
+*                            rf                            *
+************************************************************
+************************************************************
+*                         junction                         *
+************************************************************
+************************************************************
+*                       capacitance                        *
+************************************************************
++cfs     = 0               cfd     = 0               cgso    = 1.6e-010        cgdo    = 1.6e-010
++cgsl    = 0               cgdl    = 0               ckappas = 0.6             ckappad = 0.6
++cgbo    = 0               cgbl    = 0
+************************************************************
+*                       temperature                        *
+************************************************************
++tbgasub = 0.000473        tbgbsub = 636             kt1     = 0               kt1l    = 0
++ute     = -1.2            utl     = 0               ua1     = 0.001032        ud1     = 0
++ucste   = -0.004775       at      = 0.001           ptwgt   = 0.004           tmexp   = 0
++prt     = 0               tgidl   = -0.007          igt     = 2.5
+************************************************************
+*                          noise                           *
+************************************************************
+**)
+.control
+pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
+.endc
+
+
+
+.subckt asap_7nm_nfet S G D B l=7e-009 nfin=14
+	nnmos_finfet S G D B BSIMCMG_osdi_N l=7e-009 nfin=14
+.ends asap_7nm_nfet
+
+.model BSIMCMG_osdi_N BSIMCMG_va (
++ TYPE = 1
+************************************************************
+*                         general                          *
+************************************************************
++version = 107             bulkmod = 1               igcmod  = 1               igbmod  = 0
++gidlmod = 1               iimod   = 0               geomod  = 1               rdsmod  = 0
++rgatemod= 0               rgeomod = 0               shmod   = 0               nqsmod  = 0
++coremod = 0               cgeomod = 0               capmod  = 0               tnom    = 25
++eot     = 1e-009          eotbox  = 1.4e-007        eotacc  = 1e-010          tfin    = 6.5e-009
++toxp    = 2.1e-009        nbody   = 1e+022          phig    = 4.2466          epsrox  = 3.9
++epsrsub = 11.9            easub   = 4.05            ni0sub  = 1.1e+016        bg0sub  = 1.17
++nc0sub  = 2.86e+025       nsd     = 2e+026          ngate   = 0               nseg    = 5
++l       = 2.1e-008        xl      = 1e-009          lint    = -2e-009         dlc     = 0
++dlbin   = 0               hfin    = 3.2e-008        deltaw  = 0               deltawcv= 0
++sdterm  = 0               epsrsp  = 3.9             nfin    = 1
++toxg    = 1.80e-009
+************************************************************
+*                            dc                            *
+************************************************************
++cit     = 0               cdsc    = 0.01            cdscd   = 0.01            dvt0    = 0.05
++dvt1    = 0.47            phin    = 0.05            eta0    = 0.07            dsub    = 0.35
++k1rsce  = 0               lpe0    = 0               dvtshift= 0               qmfactor= 2.5
++etaqm   = 0.54            qm0     = 0.001           pqm     = 0.66            u0      = 0.0303
++etamob  = 2               up      = 0               ua      = 0.55            eu      = 1.2
++ud      = 0               ucs     = 1               rdswmin = 0               rdsw    = 200
++wr      = 1               rswmin  = 0               rdwmin  = 0               rshs    = 0
++rshd    = 0               vsat    = 70000           deltavsat= 0.2             ksativ  = 2
++mexp    = 4               ptwg    = 30              pclm    = 0.05            pclmg   = 0
++pdibl1  = 0               pdibl2  = 0.002           drout   = 1               pvag    = 0
++fpitch  = 2.7e-008        rth0    = 0.225           cth0    = 1.243e-006      wth0    = 2.6e-007
++lcdscd  = 5e-005          lcdscdr = 5e-005          lrdsw   = 0.2             lvsat   = 0
+************************************************************
+*                         leakage                          *
+************************************************************
++aigc    = 0.014           bigc    = 0.005           cigc    = 0.25            dlcigs  = 1e-009
++dlcigd  = 1e-009          aigs    = 0.0115          aigd    = 0.0115          bigs    = 0.00332
++bigd    = 0.00332         cigs    = 0.35            cigd    = 0.35            poxedge = 1.1
++agidl   = 1e-012          agisl   = 1e-012          bgidl   = 10000000        bgisl   = 10000000
++egidl   = 0.35            egisl   = 0.35
+************************************************************
+*                            rf                            *
+************************************************************
+************************************************************
+*                         junction                         *
+************************************************************
+************************************************************
+*                       capacitance                        *
+************************************************************
++cfs     = 0               cfd     = 0               cgso    = 1.6e-010        cgdo    = 1.6e-010
++cgsl    = 0               cgdl    = 0               ckappas = 0.6             ckappad = 0.6
++cgbo    = 0               cgbl    = 0
+************************************************************
+*                       temperature                        *
+************************************************************
++tbgasub = 0.000473        tbgbsub = 636             kt1     = 0               kt1l    = 0
++ute     = -0.7            utl     = 0               ua1     = 0.001032        ud1     = 0
++ucste   = -0.004775       at      = 0.001           ptwgt   = 0.004           tmexp   = 0
++prt     = 0               tgidl   = -0.007          igt     = 2.5
+************************************************************
+*                          noise                           *
+************************************************************
+**)
+.control
+pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
+.endc
+
+
+**** end user architecture code
+.end
+
 
 ```bash
 name=s1 only_toplevel=false value="
@@ -545,12 +1014,9 @@ plot temp_coeff
 plot net9/30k Vref/33.33k Vctat/33.33k
 plot abs(v2#branch)
 .endc
-"
 ```
+</details>
 
-Spice Deck: bgr_dc.spice
-
-Code for transient analysis used to plot Vref and Vctat
 
 DC and transient Graphs
 
