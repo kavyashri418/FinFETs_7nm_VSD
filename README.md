@@ -798,7 +798,7 @@ Characterization Table
 
 ---
 
-3 Design and Simulation of a Bandgap Reference Circuit Using Xschem and Ngspice
+## 3 Design and Simulation of a Bandgap Reference Circuit Using Xschem and Ngspice
 
 The below photo is taken as the reference circuit for designing the Bandgap reference.
 
@@ -1016,9 +1016,6 @@ plot abs(v2#branch)
 .endc
 ```
 </details>
-
-
-DC and transient Graphs
 
 
 <img width="952" height="807" alt="Screenshot 2025-09-25 002904" src="https://github.com/user-attachments/assets/54a7c589-9ad8-4987-a750-448123516f7d" />
