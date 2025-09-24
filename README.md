@@ -104,9 +104,9 @@ Standard Cell Area Scaling :- SDB, COAG, BS-PDN
 ## 1.7 Device Scaling Using Layered Materials
 
 Important material properties relative to silicon
-- ** a) Uniform atomic scale thickness (thickness scaling limit (~0.65nm MoS₂ monolayer) 
-- ** b) Effective mass m* higher (~0.55 mo for MoS₂ compared to ~0.22 mo for silicon)  
-- ** c) Bandgap (eg MoS₂ monolayer ~1.85ev, MoS₂ bilayer ~1.5ev)
+- Uniform atomic scale thickness (thickness scaling limit (~0.65nm MoS₂ monolayer) 
+- Effective mass m* higher (~0.55 mo for MoS₂ compared to ~0.22 mo for silicon)  
+- Bandgap (eg MoS₂ monolayer ~1.85ev, MoS₂ bilayer ~1.5ev)
 
 <img width="1259" height="666" alt="Screenshot 2025-09-16 012833" src="https://github.com/user-attachments/assets/14bcb6e3-9738-4223-9732-e5076d6e4b57" />
 
@@ -118,16 +118,16 @@ Transistor scaling for higher packing density, better performance, lower cost.
 
 Challenges for scaling
 
-- ** a) Direct source-to-drain tunneling leakage, need high effective mass (m*).
-- ** b) Surface roughness and thickness variations, uniform atomically thin materials.
-- ** c) CD high relative to Cox, need low-in plane dielectric constant (ε) and new channel material.
+- Direct source-to-drain tunneling leakage, need high effective mass (m*).
+- Surface roughness and thickness variations, uniform atomically thin materials.
+- CD high relative to Cox, need low-in plane dielectric constant (ε) and new channel material.
   
 ---
 
 Direct Source-to_Drain Tunneling
 
-- * Up to 100x reduction in direct source to drain tunneling leakage due to higher m*, Larger Eg and lower ε of MoS₂ relative to silicon.
-- * Large energy savings in electronics.
+- Up to 100x reduction in direct source to drain tunneling leakage due to higher m*, Larger Eg and lower ε of MoS₂ relative to silicon.
+- Large energy savings in electronics.
  
 <img width="2358" height="985" alt="Screenshot 2025-09-16 013236" src="https://github.com/user-attachments/assets/35891953-0ea0-4f38-b35f-39cf682bf439" />
 
@@ -135,11 +135,78 @@ Direct Source-to_Drain Tunneling
 
  MoS₂ Transistor with 1nm Gate Length
 
-- * 1nm single walled carbon nanotube gate with MoS₂ channel.
-- * Shortest gate length transistor demonstarted.
-- * MoS₂ extensions inverted using gloabl si back gate and CNT gate depletes a small region of MoS₂ above it.
-- * Large energy savings in electronics.
+-  1nm single walled carbon nanotube gate with MoS₂ channel.
+-  Shortest gate length transistor demonstarted.
+-  MoS₂ extensions inverted using gloabl si back gate and CNT gate depletes a small region of MoS₂ above it.
+-  Large energy savings in electronics.
     
+---
+
+## 1.8 3D-Structures
+
+Body-Bias Effect - very challenging to form single-crystalline semiconductor of non-planar surface using conventional semiconductors.
+
+<img width="560" height="566" alt="Screenshot 2025-09-16 020551" src="https://github.com/user-attachments/assets/9052a14f-9da2-48c5-940d-191fdec85210" />
+
+---
+
+Electrical Characteristics
+
+- Short-channel MoS₂ FET Lg=50nm
+- Excellent short-channel performance
+- Enhanced back-bais effect
+
+<img width="1626" height="1067" alt="Screenshot 2025-09-16 020938" src="https://github.com/user-attachments/assets/1fbd88b6-9ff2-43d9-ad37-ddf9966bcfb0" />
+
+---
+
+Transistor-Level Monolithic 3D
+
+<img width="1707" height="1026" alt="Screenshot 2025-09-16 021006" src="https://github.com/user-attachments/assets/d30324b8-88d3-4439-9a62-ca84e8eeb5ed" />
+
+---
+
+Area Savings
+
+<img width="1122" height="481" alt="Screenshot 2025-09-16 021125" src="https://github.com/user-attachments/assets/0527d7c0-803a-4975-9e71-f2192160a3e9" />
+
+---
+
+Monolithic 3D Circuits
+
+<img width="1260" height="1000" alt="Screenshot 2025-09-16 021143" src="https://github.com/user-attachments/assets/db289a24-80ce-4739-a057-0499543bccf4" />
+
+---
+
+Interconnects
+
+<img width="2572" height="1311" alt="Screenshot 2025-09-16 021844" src="https://github.com/user-attachments/assets/4f215f59-6dc4-414d-9dc4-d0068e64212d" />
+
+---
+
+Extending Copper Interconnects
+
+<img width="2457" height="1361" alt="Screenshot 2025-09-16 021912" src="https://github.com/user-attachments/assets/e64093ef-69ac-4301-96e6-2c5649576ea5" />
+
+---
+
+Non Cu-Metals
+- Some potential candidates :- Rh, Ir, Mo, Ni, Co and Ru
+- λ×P₀ is an indicator for size-effect / electron scattering at small interconnect dimensions.
+- Higher melting temperature / cohesive energy for EM elimination.
+- Required linear thickness will impact conductor volume and line R at small dimensions.
+- New post Cu-candidates must be barrier-less. (with sub-nm adhesion / seed layer)
+
+<img width="974" height="914" alt="Screenshot 2025-09-16 021936" src="https://github.com/user-attachments/assets/cd966860-1623-4bd3-ac25-57cc6a27a10b" />
+
+---
+
+Back-side Power Delivery Network (Bs-PDN)
+
+<img width="3220" height="1536" alt="Screenshot 2025-09-16 021956" src="https://github.com/user-attachments/assets/0f7dc32e-e089-4bfb-823e-c45c02eb76ba" />
+
+---
+
 ---
 
 
