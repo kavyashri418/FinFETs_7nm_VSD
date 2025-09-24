@@ -1,14 +1,15 @@
 ## FinFET Circuit Design and Characterization
 This GitHub repository documents the 10-day workshop on FinFET Circuit Design and Characterization using ASAP7 PDK offered by VSD Corp. Pvt. Ltd. attended from 27 Aug - 05 Sept, 2025.
 
-Table of Contents
+## Table of Contents
 
-| Module # | Topic(s) Covered |
- |---|---|
- |[**Mod. 1**](#1---scaling-beyond-cmos-finfet-devices-and-innovations) | **Scaling Beyond CMOS: FinFET Devices and Innovations** <br> <ol> <li>[Path To Zetta Scale Computing](#11---path-to-zetta-scale-computing)</li> <li>[Introduction To FinFETs](#12---introduction-to-finfets)</li> <li>[FEOL Innovations](#13-feol-innovations)</li> <li>[BEOL Innovations](#14---beol-innovations)</li> </ol> |
- |[**Mod. 2**](#2---lab-to-simulation-7nm-finfet-inverter-performance-analysis) | **Lab-to-Simulation: 7nm FinFET Inverter Performance Analysis** <br> <ol> <li>[NFET DC Characteristics Using 7nm PDKs](#21---nfet-dc-characteristics-using-7nm-pdks)</li> <li>[First Inverter Characteristics Using 7nm FinFETs](#22---first-inverter-characteristics-using-7nm-finfets)</li><li>[Module 2 Assignment - 7nm Inverter Characterization](#23---module-2-assignment---7nm-inverter-characterization)</li> </ol> |
- |[**Mod. 3**](#3---design-of-a-bandgap-reference-circuit) | **Design of a BandGap Reference Circuit** <br> <ol> <li>[Theory: Design of a BGR Circuit](#31---theory-design-of-a-bgr-circuit)</li> <li>[Module 3 Assignent - Bandgap Reference Design and Simulation using Xschem](#32---module-3-assignent---bandgap-reference-design-and-simulation-using-xschem)</li> </ol> |
- 
+| Module | Topics Covered |
+|--------|----------------|
+| 1. Scaling Beyond CMOS  | - Introduction to FinFets <br> - Device Scaling Using Layered Materials <br> - FEOL Innovations <br> - 3D Structures |
+| 2. 7nm FinFET  | - 7nm FinFet Nmos <br> - Performance Analysis <br> -  7nm Inverter Characterization |
+| 3. BGR Circuit  | - Bandagap Reference Circuit <br> - BGRef Characterization |
+
+
 ## 1.1 - Scaling Beyond CMOS: FinFET Devices and Innovations
 
 ---
@@ -41,10 +42,10 @@ Table of Contents
 
 ---
 
-  FLOPs
+   FLOPs
 - **FLOPs** = Floating Point Operations Per Second
 
-  Unit Scale (for Compute)
+  Unit Scale (to Compute)
 - **Giga → Tera → Peta → Exa → Zetta**
 
 ---
@@ -207,7 +208,217 @@ Back-side Power Delivery Network (Bs-PDN)
 
 ---
 
+## 2.1 7nm FinFET Nmos Performance Analysis
+
+Spice Deck:nfet_char.spice
+
+Schematic of nfet in Xschem
+
+![WhatsApp Image 2025-09-24 at 11 55 30 PM (1)](https://github.com/user-attachments/assets/c8846bb8-7255-4e70-95a1-8e0a1edac317)
+
+nfet spice code
+```bash
+plot Id
+```
+
+![WhatsApp Image 2025-09-24 at 10 59 19 PM (1)](https://github.com/user-attachments/assets/78ed4562-8a4d-4875-966b-74508342dcee)
+
+```bash
+plot id vs vd
+```
+
+![WhatsApp Image 2025-09-24 at 10 59 19 PM](https://github.com/user-attachments/assets/c4481690-c0e2-43e1-a197-9ecc2f50a774)
+
+## 2.2 CMOS Inverter_vtc Characteristics
+
+Spice Deck: inverter_vtc.spice
+
+Inverter schematic in Xschem
+
+<img width="1666" height="1018" alt="Screenshot 2025-09-25 000132" src="https://github.com/user-attachments/assets/4ae4fb32-ab58-4fd6-bd18-10c0b795dffb" />
+
+## 2.3 Inverter Performance 
+
 ---
+
+- VTC Curve (Vout vs. Vin)
+
+Spice command for calculating V_th 
+```bash
+dc v_th when nfet_out=nfet_in
+```
+![WhatsApp Image 2025-09-24 at 10 59 20 PM](https://github.com/user-attachments/assets/fff1fccb-4d37-4e42-b7f5-2d3e931fb4ae)
+
+- Drain Current (Id)
+
+Spice command for Id
+```bash
+let id=v2#branch
+plot id
+```
+
+<img width="915" height="817" alt="Screenshot 2025-09-24 234445" src="https://github.com/user-attachments/assets/b17b02cb-141e-4a42-a0d2-b7990d432843" />
+
+- Gain (Av)
+
+Spice command for Av
+```bash
+let gain_Av = abs(deriv(Vout))
+plot gain_Av
+```
+
+![WhatsApp Image 2025-09-24 at 11 32 44 PM](https://github.com/user-attachments/assets/4fad4698-90bb-4282-bccb-88626d712111)
+
+- Transconductance (Gm)
+
+Spice command for Gm
+```bash
+let gm = real(deriv(id, nfet_in))
+meas dc gm_max MAX gm
+plot gm
+```
+
+![WhatsApp Image 2025-09-24 at 11 32 44 PM (1)](https://github.com/user-attachments/assets/ee1e91b0-f3a9-4362-9d06-832aef4fc510)
+
+- Output Resistance (Rout)
+
+Spice command for Rout
+```bash
+let r_out= deriv(nfet_out,id)  
+plot r_out
+```
+
+![WhatsApp Image 2025-09-24 at 10 59 21 PM (1)](https://github.com/user-attachments/assets/ae2d20f0-8b4d-42f8-bbee-31b0faa1d544)
+
+- Transient Analysis
+
+Spice command for Transient Analysis
+```bash
+.param VDD_V    = 0.7
+.csparam VDD_V  = 'VDD_V'
+.csparam VLOW   = '0.2 * VDD_V'
+.csparam VHIGH  = '0.8 * VDD_V'
+```
+
+<img width="596" height="500" alt="Screenshot 2025-09-24 234316" src="https://github.com/user-attachments/assets/0af51b04-23cf-4388-873c-5f6e4f0a1212" />
+
+
+
+Values for switching threshold , drain current , Power , tpd , Av and frequency derived from graphs
+
+
+
+![WhatsApp Image 2025-09-24 at 10 59 24 PM](https://github.com/user-attachments/assets/4349dfa6-e493-447e-88c6-33964d300645)
+
+## 2.4 7nm FinFET Inverter Characterization
+
+Schematic of Inverter
+
+![WhatsApp Image 2025-09-25 at 12 07 44 AM](https://github.com/user-attachments/assets/8efb3783-7a12-4792-a15a-f97e1dd70f57)
+
+Characterization Table
+
+| S.No. | Nfin_P | W/L (PMOS) | W/L (NMOS) | Vth (V)   | Id (A)        | P (W)          | tpd (ps) | Av      | f (Hz)           |
+|-------|--------|------------|------------|-----------|---------------|----------------|----------|---------|------------------|
+| 1     | 7      | 2          | 2          | 0.3447875 | 8.07135×10^-7 | 2.964602×10^-5 | 25.30216 | 6.428412 | 2.246325×10^10 |
+| 2     | 7      | 1.43       | 2          | 0.3215502 | 8.06808×10^-7 | 2.494137×10^-5 | 25.07247 | 6.482698 | 2.259247×10^10 |
+| 3     | 7      | 1.57       | 2.14       | 0.3233583 | 8.64469×10^-7 | 2.710435×10^-5 | 25.08771 | 6.474671 | 2.258481×10^10 |
+| 4     | 7      | 1.71       | 2.29       | 0.324903  | 9.22128×10^-7 | 2.926088×10^-5 | 25.10123 | 6.469781 | 2.257800×10^10 |
+| 5     | 7      | 1.86       | 2.86       | 0.3151001 | 1.15242×10^-6 | 3.382684×10^-5 | 25.02181 | 6.512160 | 2.261735×10^10 |
+| 6     | 7      | 2.86       | 1.71       | 0.3646163 | 6.92006×10^-7 | 2.907917×10^-5 | 25.46383 | 6.446225 | 2.228250×10^10 |
+| 7     | 7      | 2.14       | 1.71       | 0.3601895 | 6.91971×10^-7 | 2.823814×10^-5 | 25.42951 | 6.437911 | 2.232961×10^10 |
+| 8     | 7      | 2          | 1.71       | 0.3554406 | 6.91931×10^-7 | 2.734615×10^-5 | 25.39228 | 6.431933 | 2.237567×10^10 |
+| 9     | 7      | 1.86       | 1.71       | 0.3503247 | 6.91884×10^-7 | 2.641482×10^-5 | 25.35068 | 6.427584 | 2.242034×10^10 |
+| 10    | 7      | 1.71       | 1.71       | 0.3447875 | 6.9183×10^-7  | 2.541088×10^-5 | 25.30216 | 6.428412 | 2.246325×10^10 |
+| 11    | 7      | 1.57       | 1.57       | 0.3398124 | 6.9179×10^-7  | 2.452318×10^-5 | 25.27541 | 6.429105 | 2.248651×10^10 |
+| 12    | 7      | 1.43       | 1.86       | 0.3329011 | 7.1184×10^-7  | 2.561732×10^-5 | 25.26134 | 6.435227 | 2.244879×10^10 |
+| 13    | 7      | 2.29       | 2.29       | 0.3184553 | 9.8437×10^-7  | 3.124551×10^-5 | 25.13428 | 6.493624 | 2.258892×10^10 |
+| 14    | 7      | 2.43       | 2.0        | 0.3297752 | 8.9553×10^-7  | 2.972186×10^-5 | 25.15267 | 6.481303 | 2.257151×10^10 |
+| 15    | 7      | 2.71       | 2.14       | 0.3362088 | 9.5112×10^-7  | 3.184227×10^-5 | 25.16792 | 6.472815 | 2.255092×10^10 |
+| 16    | 7      | 1.86       | 2.43       | 0.3221995 | 1.0234×10^-6  | 3.216713×10^-5 | 25.08916 | 6.487659 | 2.259931×10^10 |
+| 17    | 7      | 2.57       | 2.57       | 0.3158822 | 1.1529×10^-6  | 3.351224×10^-5 | 25.03341 | 6.515021 | 2.263441×10^10 |
+| 18    | 7      | 2.14       | 2.43       | 0.3284406 | 1.0712×10^-6  | 3.278456×10^-5 | 25.12186 | 6.499385 | 2.260412×10^10 |
+| 19    | 7      | 2.29       | 2.71       | 0.3199021 | 1.1875×10^-6  | 3.412852×10^-5 | 25.04677 | 6.509826 | 2.262972×10^10 |
+| 20    | 7      | 2.71       | 2.86       | 0.3171189 | 1.2042×10^-6  | 3.458891×10^-5 | 25.02815 | 6.518392 | 2.264185×10^10 |
+
+---
+
+3 Design and Simulation of a Bandgap Reference Circuit Using Xschem and Ngspice
+
+The below photo is taken as the reference circuit for designing the Bandgap reference.
+
+<img width="818" height="519" alt="Screenshot 2025-09-25 002310" src="https://github.com/user-attachments/assets/8c94dd5e-594b-4256-bc21-81022bf7fee3" />
+
+## 3.1 Design using Xschem
+
+![WhatsApp Image 2025-09-25 at 12 20 16 AM](https://github.com/user-attachments/assets/fa7564b7-7c51-40b5-82fe-cd0996e89608)
+
+Code for dc analysis used to plot Vref and Vctat
+
+```bash
+name=s1 only_toplevel=false value="
+.dc temp -45 150 5
+.control
+pre_osdi /home/vsduser/Desktop/asap_7nm_Xschem/bsimcmg.osdi
+run
+plot v(Vref) v(Vctat)
+plot v(Vref)-v(Vctat)
+plot v(Vctat)
+plot v(Vref)
+let temp_coeff = deriv(v(Vref))/1.24
+plot temp_coeff
+plot net9/30k Vref/33.33k Vctat/33.33k
+plot abs(v2#branch)
+.endc
+"
+```
+
+Spice Deck: bgr_dc.spice
+
+Code for transient analysis used to plot Vref and Vctat
+
+DC and transient Graphs
+
+
+<img width="952" height="807" alt="Screenshot 2025-09-25 002904" src="https://github.com/user-attachments/assets/54a7c589-9ad8-4987-a750-448123516f7d" />
+
+
+
+
+
+<img width="957" height="789" alt="Screenshot 2025-09-25 002915" src="https://github.com/user-attachments/assets/58100908-b046-4e46-91a8-faf94aedb3a3" />
+
+
+BGRef Characterization Table
+
+| S.No. | VDD (V) | Temp (°C) | Vref (V) | Line Reg. (mV/V) | Startup Time (ns) |
+|-------|---------|-----------|----------|------------------|-------------------|
+| 1     | 0.8     | 27        | 0.6615   | 827.4            | 55210.12          |
+| 2     | 0.9     | 27        | 0.7482   | 828.55           | 51123.45          |
+| 3     | 1.0     | 27        | 0.8308   | 829.1            | 47985.76          |
+| 4     | 1.0     | -40       | 0.8399   | 837.65           | 75592.84          |
+| 5     | 1.0     | 125       | 0.8169   | 816.2            | 29678.32          |
+
+Conclusion
+
+In this workshop, we explored the performance evaluation of 7 nm FinFET devices using the ASAP7 PDK. The sessions guided us through designing and simulating a Bandgap Reference Circuit with PFETs and NFETs in Xschem. We practiced generating SPICE netlists, running analyses in ngspice, and interpreting results. Key parameters such as startup behavior and reference voltage stability of the bandgap reference were investigated. Overall, the workshop strengthened both our understanding of advanced-node device modeling and our ability to carry out credible circuit analysis.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
