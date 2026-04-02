@@ -1,5 +1,5 @@
 ## FinFET Circuit Design and Characterization
-This GitHub repository documents the 10-day workshop on FinFET Circuit Design and Characterization using ASAP7 PDK offered by VSD Corp. Pvt. Ltd. attended from 10 Sep - 19 Sept, 2025.
+This GitHub repository documents FinFET Circuit Design and Characterization using ASAP7 PDK.
 
 ## Table of Contents
 
